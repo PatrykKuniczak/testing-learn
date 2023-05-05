@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { Body, Controller, Get, Param } from "@nestjs/common";
 import { PostsService } from "src/posts/posts.service";
 import { Post } from "src/database/schemas/posts.schema";
 
@@ -8,12 +8,17 @@ export class PostsController {
   }
 
   @Get()
-  async findAll(): Promise<Post[]> {
-    return this.postsService.findAll();
+  async findAll(@Body("lastDate") lastDate: string): Promise<Post[]> {
+    return this.postsService.findAll(lastDate);
   }
 
   @Get(":id")
   async findOne(@Param("id") id: string): Promise<Post> {
     return this.postsService.findOne(id);
   }
+
+  // @Put("")
+  // async updateAll() {
+  //   return this.postsService.updateAll();
+  // }
 }

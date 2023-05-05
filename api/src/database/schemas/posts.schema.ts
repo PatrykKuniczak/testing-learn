@@ -7,6 +7,9 @@ export class Post {
 
   @Prop({ required: true })
   description: string;
+
+  @Prop({ required: true, default: Date.now })
+  createdAt: Date;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

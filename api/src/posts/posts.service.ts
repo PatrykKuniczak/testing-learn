@@ -8,11 +8,16 @@ export class PostsService {
   constructor(@InjectModel(Post.name) private readonly postModel: Model<Post>) {
   }
 
-  async findAll(): Promise<Post[]> {
-    return this.postModel.find().exec();
+  async findAll(lastDate: string): Promise<Post[]> {
+    return this.postModel.find().where("createdAt").gte(Date.parse(lastDate)).limit(5).sort({ title: 1 }).exec();
   }
 
   async findOne(id: string): Promise<Post> {
     return this.postModel.findById(id).exec();
   }
+
+  // async updateAll() {
+  //   // const data = await this.findAll();
+  //   // return this.postModel.updateMany({ title: /^P(.*?)$/ }, { ...data, createdAt: Date.now() });
+  // }
 }
