@@ -1,6 +1,6 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-@Schema({ collection: "posts" })
+@Schema({ collection: 'posts' })
 export class PostEntity {
   @Prop({ required: true })
   title: string;
@@ -8,8 +8,8 @@ export class PostEntity {
   @Prop({ required: true })
   description: string;
 
-  @Prop({ required: true, default: Date.now })
-  createdAt: Date;
+  @Prop({ required: true, default: new Date().toISOString })
+  createdAt: string;
 }
 
 export const PostSchema = SchemaFactory.createForClass(PostEntity);
