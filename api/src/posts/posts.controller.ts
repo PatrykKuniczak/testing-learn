@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { HydratedDocument, UpdateWriteOpResult } from 'mongoose';
 import { PostEntity } from '../database/schemas/posts.schema';
 import { PostsService } from './posts.service';
@@ -9,9 +18,10 @@ export class PostsController {
 
   @Get()
   async findAll(
-    @Body('lastDate') lastDate: string,
+    @Query('pageNumber', ParseIntPipe) pageNumber: number,
+    @Query('skipSize', ParseIntPipe) skipSize: number,
   ): Promise<HydratedDocument<PostEntity>[]> {
-    return this.postsService.findAll(lastDate);
+    return this.postsService.findAll(pageNumber, skipSize);
   }
 
   @Get(':id')

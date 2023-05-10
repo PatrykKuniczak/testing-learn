@@ -9,13 +9,15 @@ export class PostsService {
     @InjectModel(PostEntity.name) private readonly postModel: Model<PostEntity>,
   ) {}
 
-  async findAll(lastDate: string): Promise<HydratedDocument<PostEntity>[]> {
+  async findAll(
+    pageNumber: number,
+    skipSize: number,
+  ): Promise<HydratedDocument<PostEntity>[]> {
     return this.postModel
       .find()
-      .where('createdAt')
-      .gt(Date.parse(lastDate))
-      .limit(5)
-      .sort({ title: 1 })
+      .skip(pageNumber >= 1 ? pageNumber * skipSize : 0)
+      .limit(skipSize)
+      .sort({ createdAt: 1 })
       .exec();
   }
 
